@@ -12,7 +12,11 @@ import java.util.List;
  */
 @RestController
 public class RedisHelloController {
-  List<String> list = new ArrayList<>();
+
+  @GetMapping("")
+  public List<String> getString() {
+    return null;
+  }
 
   @GetMapping("/add")
   public String addString() {

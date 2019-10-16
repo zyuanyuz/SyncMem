@@ -15,8 +15,8 @@ public class RedisClientConfig {
     @Bean
     public RedisClient redisClient(){
         RedisURI uri = RedisURI.create("127.0.0.1",6379);
-        return RedisClient.create(uri);
+        RedisClient client =  RedisClient.create(uri);
+        return client;
     }
 
-        
 }
