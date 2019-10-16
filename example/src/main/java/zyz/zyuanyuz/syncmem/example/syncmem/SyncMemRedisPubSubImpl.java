@@ -6,7 +6,7 @@ import io.lettuce.core.pubsub.RedisPubSubListener;
  * @author George Yu
  * @since 2019/10/16 17:46
  */
-public class RedisPubSubImpl implements RedisPubSubListener<String,String> {
+public class SyncMemRedisPubSubImpl implements RedisPubSubListener<String,String> {
     @Override
     public void message(String channel, String message) {
 

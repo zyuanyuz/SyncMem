@@ -9,10 +9,10 @@ import java.util.Collection;
  * @since 2019/10/16 17:45
  */
 public class SyncMemUtil {
-    RedisPubSubImpl pubSub;
+    SyncMemRedisPubSubImpl pubSub;
 
     public SyncMemUtil(){
-        pubSub = new RedisPubSubImpl();
+        pubSub = new SyncMemRedisPubSubImpl();
         pubSub.subscribed("cahnnel",1);
     }
 

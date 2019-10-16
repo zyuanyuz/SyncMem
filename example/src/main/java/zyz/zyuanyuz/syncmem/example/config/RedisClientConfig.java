@@ -19,4 +19,5 @@ public class RedisClientConfig {
         return client;
     }
 
+
 }
