@@ -1,13 +1,16 @@
 package zyz.zyuanyuz.syncmem.example.syncmemutil;
 
 import com.alibaba.fastjson.JSONObject;
+import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.annotation.SyncMemMethod;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author George Yu
@@ -16,17 +19,25 @@ import java.util.*;
 public class SyncMemUtil {
   private final Logger logger = LoggerFactory.getLogger(SyncMemUtil.class);
 
-  private StatefulRedisPubSubConnection<String, String> pubSubConnection;
+  private StatefulRedisPubSubConnection<String, String> pubConnection;
+
+  private StatefulRedisPubSubConnection<String, String> subConnection;
+
+  private String uuid;
 
   private Map<String, SyncMemEntry> entryMap = new HashMap<>();
 
   private String channel;
 
-  public SyncMemUtil(
-      StatefulRedisPubSubConnection<String, String> pubSubConnection, String channel) {
-    this.pubSubConnection = pubSubConnection;
-    this.pubSubConnection.addListener(
+  public SyncMemUtil(RedisClient redisClient, String channel) {
+    this.pubConnection = redisClient.connectPubSub();
+
+    this.subConnection = redisClient.connectPubSub();
+    this.subConnection.addListener(
         new SyncMemRedisPubSubImpl(channel, this)); // use this for callback
+    this.subConnection.sync().subscribe(channel);
+
+    this.uuid = UUID.randomUUID().toString();
     this.channel = channel;
   }
 
@@ -56,22 +67,29 @@ public class SyncMemUtil {
   }
 
   private void syncMemPublish(String methodName, Object data, Class<?> clazz) {
-    SyncMemProtocol protocol = new SyncMemProtocol(methodName, data, clazz);
+    SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazz);
     String jsonStr = JSONObject.toJSONString(protocol);
-    logger.info("pub to channel {}", jsonStr);
-    pubSubConnection.sync().publish(this.channel, jsonStr);
+    logger.info("publish to channel:{} data:{}", this.channel, jsonStr);
+    pubConnection.sync().publish(this.channel, jsonStr);
   }
 
   void handleSyncMem(String message) {
-    logger.info("start handle sync message {}", message);
-    SyncMemProtocol protocol;
+    logger.info("start handle sync message {},entry map now is {}", message, entryMap);
     try {
-      protocol = JSONObject.parseObject(message, SyncMemProtocol.class);
+      SyncMemProtocol protocol = JSONObject.parseObject(message, SyncMemProtocol.class);
+      logger.info("protocol data class is {}", protocol.getDataClazz().toString());
+      if (protocol
+          .getSyncMemId()
+          .equals(this.uuid)) { // receive the message this SyncMemUtil published
+        return;
+      }
       SyncMemEntry entry = entryMap.get(protocol.getMethodId());
-      // need test
+      // method invoke need test
+      logger.info("method ready to invoke is :{}", entry.getMethod().getName());
       entry.getMethod().invoke(entry.getObj(), protocol.getDataClazz().cast(protocol.getData()));
     } catch (Exception e) {
-      logger.error("Handle sync mem failed with exception :{}", e.getMessage());
+      logger.error("handle sync mem failed with exception :{}", e.getMessage());
+      e.printStackTrace();
     }
   }
 }

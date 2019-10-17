@@ -8,14 +8,24 @@ package zyz.zyuanyuz.syncmem.example.syncmemutil;
  */
 public class SyncMemProtocol {
 
+  private String syncMemId;
   private String methodId;
   private Class<?> dataClazz;
   private Object data;
 
-  public SyncMemProtocol(String methodId, Object data, Class<?> clazz) {
+  public SyncMemProtocol(String syncMemId, String methodId, Object data, Class<?> clazz) {
+    this.syncMemId = syncMemId;
     this.methodId = methodId;
     this.dataClazz = clazz;
     this.data = data;
+  }
+
+  public String getSyncMemId() {
+    return syncMemId;
+  }
+
+  public void setSyncMemId(String syncMemId) {
+    this.syncMemId = syncMemId;
   }
 
   public String getMethodId() {
@@ -40,5 +50,16 @@ public class SyncMemProtocol {
 
   public void setDataClazz(Class<?> dataClazz) {
     this.dataClazz = dataClazz;
+  }
+
+  @Override
+  public String toString() {
+    return "MethodId:["
+        + methodId
+        + "],data type:["
+        + dataClazz.toString()
+        + "],data:["
+        + data.toString()
+        + "]";
   }
 }

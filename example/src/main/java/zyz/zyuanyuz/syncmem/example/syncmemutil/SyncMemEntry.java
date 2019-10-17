@@ -1,7 +1,6 @@
 package zyz.zyuanyuz.syncmem.example.syncmemutil;
 
 import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * @author George Yu
@@ -42,5 +41,16 @@ public class SyncMemEntry {
 
   public void setMethod(Method method) {
     this.method = method;
+  }
+
+  @Override
+  public String toString() {
+    return "id is ["
+        + this.id
+        + "],obj:["
+        + obj.toString()
+        + "],methodName is :["
+        + this.method.getName()
+        + "]";
   }
 }

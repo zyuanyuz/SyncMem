@@ -2,9 +2,7 @@ package zyz.zyuanyuz.syncmem.example.syncmemutil.autoconfig;
 
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
-import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,15 +25,7 @@ public class SyncMemConfig {
 
   @Bean
   @ConditionalOnMissingBean
-  public StatefulRedisPubSubConnection<String, String> pubSubConnection(
-      @Autowired RedisClient redisClient) {
-    return redisClient.connectPubSub();
-  }
-
-  @Bean
-  @ConditionalOnMissingBean
-  public SyncMemUtil syncMemUtil(
-      @Autowired StatefulRedisPubSubConnection<String, String> pubSubConnection) {
-    return new SyncMemUtil(pubSubConnection, "example");
+  public SyncMemUtil syncMemUtil(@Autowired RedisClient redisClient) {
+    return new SyncMemUtil(redisClient, "example");
   }
 }
