@@ -1,6 +1,4 @@
-package zyz.zyuanyuz.syncmem.example.syncmem.annotation;
-
-import zyz.zyuanyuz.syncmem.example.syncmem.SyncMemMethodType;
+package zyz.zyuanyuz.syncmem.example.syncmemutil.annotation;
 
 import java.lang.annotation.*;
 
@@ -16,11 +14,5 @@ public @interface SyncMemMethod {
      *
      * @return
      */
-    String dataName();
-
-    /**
-     *
-     * @return
-     */
-    SyncMemMethodType methodType();
+    String value();
 }

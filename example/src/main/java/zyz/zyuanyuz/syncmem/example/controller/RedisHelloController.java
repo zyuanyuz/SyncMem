@@ -1,9 +1,10 @@
 package zyz.zyuanyuz.syncmem.example.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import zyz.zyuanyuz.syncmem.example.service.RedisHelloService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,19 +13,22 @@ import java.util.List;
  */
 @RestController
 public class RedisHelloController {
+  @Autowired RedisHelloService redisHelloService;
 
-  @GetMapping("")
+  @GetMapping("/get")
   public List<String> getString() {
-    return null;
+    return redisHelloService.getList();
   }
 
   @GetMapping("/add")
-  public String addString() {
-    return null;
+  public List<String> addString() {
+    redisHelloService.addString();
+    return redisHelloService.getList();
   }
 
   @GetMapping("del")
-  public String delString() {
-    return null;
+  public List<String> delString() {
+    redisHelloService.delString();
+    return redisHelloService.getList();
   }
 }
