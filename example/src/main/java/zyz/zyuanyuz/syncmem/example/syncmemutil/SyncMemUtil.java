@@ -5,6 +5,7 @@ import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.annotation.SyncMemMethod;
 
 import java.lang.reflect.Method;
@@ -67,7 +68,7 @@ public class SyncMemUtil {
   }
 
   private void syncMemPublish(String methodName, Object data, Class<?> clazz) {
-    SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazz);
+    SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazz.getName());
     String jsonStr = JSONObject.toJSONString(protocol);
     logger.info("publish to channel:{} data:{}", this.channel, jsonStr);
     pubConnection.sync().publish(this.channel, jsonStr);
@@ -77,7 +78,7 @@ public class SyncMemUtil {
     logger.info("start handle sync message {},entry map now is {}", message, entryMap);
     try {
       SyncMemProtocol protocol = JSONObject.parseObject(message, SyncMemProtocol.class);
-      logger.info("protocol data class is {}", protocol.getDataClazz().toString());
+      logger.warn("protocol:{}", protocol);
       if (protocol
           .getSyncMemId()
           .equals(this.uuid)) { // receive the message this SyncMemUtil published
@@ -86,7 +87,7 @@ public class SyncMemUtil {
       SyncMemEntry entry = entryMap.get(protocol.getMethodId());
       // method invoke need test
       logger.info("method ready to invoke is :{}", entry.getMethod().getName());
-      entry.getMethod().invoke(entry.getObj(), protocol.getDataClazz().cast(protocol.getData()));
+      entry.getMethod().invoke(entry.getObj(), protocol.getData());
     } catch (Exception e) {
       logger.error("handle sync mem failed with exception :{}", e.getMessage());
       e.printStackTrace();
