@@ -28,7 +28,8 @@ public class SyncMemConfig {
   @Bean
   @ConditionalOnMissingBean
   @Lazy
-  public SyncMemUtil syncMemUtil(@Autowired RedisClient redisClient) {
-    return new SyncMemUtil(redisClient, "example");
+  public SyncMemUtil syncMemUtil(
+      @Autowired RedisClient redisClient, @Value("${spring.application.name}") String appName) {
+    return new SyncMemUtil(redisClient, appName);
   }
 }
