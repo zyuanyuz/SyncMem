@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
  */
 public class SyncMemEntry {
   private String id;
-  private Object obj; // use to call method
+  private Object obj; // Object use to call method
   private Method method;
 
   public SyncMemEntry() {}

@@ -5,7 +5,6 @@ import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.annotation.SyncMemMethod;
 
 import java.lang.reflect.Method;
@@ -24,8 +23,10 @@ public class SyncMemUtil {
 
   private StatefulRedisPubSubConnection<String, String> subConnection;
 
+  // use to identify the SyncMemUtil
   private String uuid;
 
+  // use to store the obj and method
   private Map<String, SyncMemEntry> entryMap = new HashMap<>();
 
   private String channel;
@@ -35,7 +36,7 @@ public class SyncMemUtil {
 
     this.subConnection = redisClient.connectPubSub();
     this.subConnection.addListener(
-        new SyncMemRedisPubSubImpl(channel, this)); // use this for callback
+        new SyncMemRedisPubSubImpl(channel, this::handleSyncMem)); // use this for callback
     this.subConnection.sync().subscribe(channel);
 
     this.uuid = UUID.randomUUID().toString();

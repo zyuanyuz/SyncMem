@@ -12,10 +12,10 @@ public class SyncMemProtocol implements Serializable {
 
   private String syncMemId;
   private String methodId;
-  private String typeName;
+  private String typeName; // can't set as Class type because fastJson can't serialize it
   private Object data;
 
-  public SyncMemProtocol(String syncMemId, String methodId, Object data, String typeName) {
+  SyncMemProtocol(String syncMemId, String methodId, Object data, String typeName) {
     this.syncMemId = syncMemId;
     this.methodId = methodId;
     this.typeName = typeName;
