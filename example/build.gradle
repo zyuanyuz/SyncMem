@@ -15,7 +15,6 @@ repositories {
 dependencies {
     //dependency for SyncMem
     implementation 'io.lettuce:lettuce-core:5.0.5.RELEASE'
-    //compile 'org.reflections:reflections:0.9.11'
     implementation 'com.alibaba:fastjson:1.2.62'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
