@@ -25,11 +25,18 @@ public class SyncMemConfig {
     return RedisClient.create(RedisURI.builder().withHost("localhost").withPort(6379).build());
   }
 
+  //  @Bean
+  //  @ConditionalOnMissingBean
+  //  @Lazy
+  //  public SyncMemUtil syncMemUtil(
+  //      @Autowired RedisClient redisClient, @Value("${spring.application.name}") String appName) {
+  //    return new SyncMemUtil(redisClient, appName);
+  //  }
+
   @Bean
   @ConditionalOnMissingBean
   @Lazy
-  public SyncMemUtil syncMemUtil(
-      @Autowired RedisClient redisClient, @Value("${spring.application.name}") String appName) {
-    return new SyncMemUtil(redisClient, appName);
+  public SyncMemUtil syncMemUtil(@Autowired RedisClient redisClient) {
+    return new SyncMemUtil(redisClient, "example");
   }
 }

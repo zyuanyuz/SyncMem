@@ -17,19 +17,19 @@ public class RedisHelloController {
 
 
   @GetMapping("/get")
-  public List<String> getString() {
-    return redisHelloService.getList();
+  public String getString() {
+    return redisHelloService.getList().toString();
   }
 
   @GetMapping("/add")
-  public List<String> addString() {
-    redisHelloService.addString();
-    return redisHelloService.getList();
+  public String addString() {
+    redisHelloService.add();
+    return redisHelloService.getList().toString();
   }
 
   @GetMapping("del")
-  public List<String> delString() {
-    redisHelloService.delString();
-    return redisHelloService.getList();
+  public String delString() {
+    redisHelloService.del();
+    return redisHelloService.getList().toString();
   }
 }

@@ -5,6 +5,8 @@ import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zyz.zyuanyuz.syncmem.example.syncmemutil.serializer.JsonSerializer;
+import zyz.zyuanyuz.syncmem.example.syncmemutil.serializer.SyncMemSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,8 @@ public class SyncMemUtil {
 
   private String channel;
 
+  private SyncMemSerializer serializer;
+
   public SyncMemUtil(RedisClient redisClient, String channel) {
     this.uuid = UUID.randomUUID().toString();
     this.channel = channel;
@@ -40,9 +44,13 @@ public class SyncMemUtil {
     this.subConnection.addListener(
         new SyncMemRedisPubSubImpl(this.channel, this::handleSyncMem)); // use this for callback
     this.subConnection.sync().subscribe(channel);
+    this.serializer = new JsonSerializer();
   }
 
-  // TODO there has a way to avoid register?
+  public void setSerializer(SyncMemSerializer serializer) {
+    this.serializer = serializer;
+  }
+
   public void register(String methodId, Consumer<Object> method) {
     methodMap.put(methodId, method);
   }
@@ -50,25 +58,20 @@ public class SyncMemUtil {
   /**
    * use to publish data to channel
    *
-   * @param methodId
+   * @param methodName
    * @param data
    */
-  public void syncMemPublish(String methodId, Object data) {
-    syncMemPublish(methodId, data, data.getClass());
-  }
-
-  private void syncMemPublish(String methodName, Object data, Class<?> clazz) {
-    SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazz.getName());
-    String jsonStr = JSONObject.toJSONString(protocol);
+  private void syncMemPublish(String methodName, Object data) {
+    SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data);
+    String jsonStr = serializer.serializeObject(protocol);
     logger.info("publish to channel:{} data:{}", this.channel, jsonStr);
     pubConnection.sync().publish(this.channel, jsonStr);
   }
 
-  void handleSyncMem(String message) {
+  private void handleSyncMem(String message) {
     logger.info("start handle sync message:{}", message);
     try {
-      SyncMemProtocol protocol = JSONObject.parseObject(message, SyncMemProtocol.class);
-      logger.warn("protocol:{}", protocol);
+      SyncMemProtocol protocol = serializer.deserializeObject(message);
       if (protocol
           .getSyncMemId()
           .equals(this.uuid)) { // receive the message this SyncMemUtil published

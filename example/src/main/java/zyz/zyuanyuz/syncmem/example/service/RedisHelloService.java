@@ -2,7 +2,10 @@ package zyz.zyuanyuz.syncmem.example.service;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import zyz.zyuanyuz.syncmem.example.domain.ComplexDomain;
+import zyz.zyuanyuz.syncmem.example.domain.SimpleDomain;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemUtil;
 
 import java.util.ArrayList;
@@ -17,7 +20,10 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @Service
 public class RedisHelloService implements InitializingBean {
-  List<String> list = new ArrayList<>();
+  @Value("${spring.application.name}")
+  private String appName;
+
+  List<ComplexDomain> list = new ArrayList<>();
 
   Lock lock = new ReentrantLock();
 
@@ -25,38 +31,34 @@ public class RedisHelloService implements InitializingBean {
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    syncMemUtil.register("redisHelloService.syncDelete", o -> syncDelString((List<String>) o));
-    syncMemUtil.register("redisHelloService.syncAdd", o -> syncAddString((List<String>) o));
+    syncMemUtil.register("redisHelloService.syncDelete", o -> syncDel((List<ComplexDomain>) o));
+    syncMemUtil.register("redisHelloService.syncAdd", o -> syncAdd((List<ComplexDomain>) o));
   }
 
-  public List<String> getList() {
+  public List<ComplexDomain> getList() {
     return list;
   }
 
-  public void initStrList(){
-    List<String> strList = Arrays.asList("ab","bc","cd");
+  public void initList() {}
 
+  public void add() {
+    List<ComplexDomain> addList = new ArrayList<>();
+    List<SimpleDomain> simpleList =
+        Arrays.asList(
+            new SimpleDomain("ten", 10), new SimpleDomain("two", 2), new SimpleDomain("one", 1));
+    addList.add(new ComplexDomain("a", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
+    addList.add(new ComplexDomain("b", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
+    addList.add(new ComplexDomain("c", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
+    syncMemUtil.syncMemPublish("redisHelloService.syncAdd", addList);
+    this.list.addAll(addList);
   }
 
-  public void addString() {
-    List<String> strList = Arrays.asList("a", "b", "c");
-    syncMemUtil.syncMemPublish("redisHelloService.syncAdd", strList);
-    list.addAll(strList);
+  public void del() {}
+
+  public void syncAdd(List<ComplexDomain> data) {
+    System.out.println(data.get(0).getObj().getClass());
+    this.list.addAll(data);
   }
 
-  public void delString() {
-    List<String> strList = Arrays.asList("a");
-    syncMemUtil.syncMemPublish("redisHelloService.syncDelete", strList);
-    list.removeAll(strList);
-  }
-
-  // @SyncMemMethod("redisHelloService.list.add")
-  public void syncAddString(List<String> data) {
-    list.addAll(data);
-  }
-
-  // @SyncMemMethod("redisHelloService.list.delete")
-  public void syncDelString(List<String> data) {
-    list.removeAll(data);
-  }
+  public void syncDel(List<ComplexDomain> data) {}
 }
