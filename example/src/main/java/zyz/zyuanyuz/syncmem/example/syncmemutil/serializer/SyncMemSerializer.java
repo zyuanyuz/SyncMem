@@ -9,5 +9,5 @@ import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemProtocol;
 public interface SyncMemSerializer {
   String serializeObject(SyncMemProtocol protocol);
 
-  SyncMemProtocol deserializeObject(String msg);
+  SyncMemProtocol deserializeObject(String msg) throws Exception;
 }

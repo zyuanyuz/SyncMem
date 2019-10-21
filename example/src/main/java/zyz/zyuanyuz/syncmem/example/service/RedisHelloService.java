@@ -49,7 +49,8 @@ public class RedisHelloService implements InitializingBean {
     addList.add(new ComplexDomain("a", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
     addList.add(new ComplexDomain("b", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
     addList.add(new ComplexDomain("c", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
-    syncMemUtil.syncMemPublish("redisHelloService.syncAdd", addList);
+    syncMemUtil.syncMemPublish(
+        "redisHelloService.syncAdd", addList, addList.getClass(), ComplexDomain.class);
     this.list.addAll(addList);
   }
 

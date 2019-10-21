@@ -2,6 +2,7 @@ package zyz.zyuanyuz.syncmem.example.syncmemutil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,6 +13,11 @@ import java.util.List;
  */
 public class SyncMemProtocol implements Serializable {
 
+  public static final String SYNCMEMID_STR = "syncMemId";
+  public static final String METHODID_STR = "methodId";
+  public static final String TYPENAMES = "typeNames";
+  public static final String DATA_STR = "data";
+
   private String syncMemId;
   private String methodId;
   private List<String> typeNames; // can't set as Class type because fastJson can't serialize it
@@ -19,19 +25,19 @@ public class SyncMemProtocol implements Serializable {
 
   public SyncMemProtocol() {}
 
-  public SyncMemProtocol(String syncMemId, String methodId, String typeName, Object data) {
+  public SyncMemProtocol(String syncMemId, String methodId, Object data, Class<?>... clazzs) {
+    String[] types = new String[clazzs.length];
+    for (int i = 0; i < clazzs.length; i++) {
+      types[i] = clazzs[i].toString();
+    }
+  }
+
+  public SyncMemProtocol(String syncMemId, String methodId, Object data, String... types) {
     this.syncMemId = syncMemId;
     this.methodId = methodId;
     this.data = data;
     this.typeNames = new ArrayList<>();
-    typeNames.add(typeName);
-  }
-
-  public SyncMemProtocol(String syncMemId, String methodId, List<String> typeNames, Object data) {
-    this.syncMemId = syncMemId;
-    this.methodId = methodId;
-    this.typeNames = typeNames;
-    this.data = data;
+    typeNames.addAll(Arrays.asList(types));
   }
 
   public String getSyncMemId() {

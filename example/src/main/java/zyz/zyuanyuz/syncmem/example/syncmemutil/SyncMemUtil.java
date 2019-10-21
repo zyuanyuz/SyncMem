@@ -1,6 +1,5 @@
 package zyz.zyuanyuz.syncmem.example.syncmemutil;
 
-import com.alibaba.fastjson.JSONObject;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.slf4j.Logger;
@@ -61,8 +60,8 @@ public class SyncMemUtil {
    * @param methodName
    * @param data
    */
-  private void syncMemPublish(String methodName, Object data) {
-    SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data);
+  public void syncMemPublish(String methodName, Object data, Class<?>... clazzs) {
+    SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazzs);
     String jsonStr = serializer.serializeObject(protocol);
     logger.info("publish to channel:{} data:{}", this.channel, jsonStr);
     pubConnection.sync().publish(this.channel, jsonStr);
