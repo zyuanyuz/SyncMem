@@ -54,12 +54,6 @@ public class SyncMemUtil {
     methodMap.put(methodId, method);
   }
 
-  /**
-   * use to publish data to channel
-   *
-   * @param methodName
-   * @param data
-   */
   public void syncMemPublish(String methodName, Object data, Class<?>... clazzs) {
     SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazzs);
     String jsonStr = serializer.serializeObject(protocol);

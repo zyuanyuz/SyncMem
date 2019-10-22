@@ -26,10 +26,15 @@ public class SyncMemProtocol implements Serializable {
   public SyncMemProtocol() {}
 
   public SyncMemProtocol(String syncMemId, String methodId, Object data, Class<?>... clazzs) {
+    this();
     String[] types = new String[clazzs.length];
     for (int i = 0; i < clazzs.length; i++) {
       types[i] = clazzs[i].toString();
     }
+    this.setSyncMemId(syncMemId);
+    this.setMethodId(methodId);
+    this.setData(data);
+    this.setTypeNames(Arrays.asList(types));
   }
 
   public SyncMemProtocol(String syncMemId, String methodId, Object data, String... types) {
