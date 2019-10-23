@@ -11,7 +11,7 @@ import java.util.List;
  * @author George Yu
  * @since 2019/10/17 10:33
  */
-public class SyncMemProtocol implements Serializable {
+public class SyncMemProtocol<T> implements Serializable {
 
   public static final String SYNCMEMID_STR = "syncMemId";
   public static final String METHODID_STR = "methodId";
@@ -21,11 +21,19 @@ public class SyncMemProtocol implements Serializable {
   private String syncMemId;
   private String methodId;
   private List<String> typeNames; // can't set as Class type because fastJson can't serialize it
-  private Object data;
+  private String typeName;
+  private T data;
 
   public SyncMemProtocol() {}
 
-  public SyncMemProtocol(String syncMemId, String methodId, Object data, Class<?>... clazzs) {
+  public SyncMemProtocol(String syncMemId, String methodId, T data, String typeName) {
+    this.syncMemId = syncMemId;
+    this.methodId = methodId;
+    this.data = data;
+    this.typeName = typeName;
+  }
+
+  public SyncMemProtocol(String syncMemId, String methodId, T data, Class<?>... clazzs) {
     this();
     String[] types = new String[clazzs.length];
     for (int i = 0; i < clazzs.length; i++) {
@@ -37,7 +45,7 @@ public class SyncMemProtocol implements Serializable {
     this.setTypeNames(Arrays.asList(types));
   }
 
-  public SyncMemProtocol(String syncMemId, String methodId, Object data, String... types) {
+  public SyncMemProtocol(String syncMemId, String methodId, T data, String... types) {
     this.syncMemId = syncMemId;
     this.methodId = methodId;
     this.data = data;
@@ -61,11 +69,11 @@ public class SyncMemProtocol implements Serializable {
     this.methodId = methodId;
   }
 
-  public Object getData() {
+  public T getData() {
     return data;
   }
 
-  public void setData(Object data) {
+  public void setData(T data) {
     this.data = data;
   }
 
