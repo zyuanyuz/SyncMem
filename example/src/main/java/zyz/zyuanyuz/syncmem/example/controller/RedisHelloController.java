@@ -10,12 +10,6 @@ import zyz.zyuanyuz.syncmem.example.domain.SimpleDomain;
 import zyz.zyuanyuz.syncmem.example.service.RedisHelloService;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemProtocol;
 
-<<<<<<< HEAD
-=======
-import java.util.ArrayList;
-import java.util.List;
-
->>>>>>> 37df1e31c722c1c58b942f3a73d02c49d634e664
 /**
  * @author George Yu
  * @since 2019/10/16 17:45
@@ -40,17 +34,4 @@ public class RedisHelloController {
     redisHelloService.del();
     return redisHelloService.getList().toString();
   }
-<<<<<<< HEAD
 }
-=======
-
-  @GetMapping("/test")
-  public String testTypeReference(){
-    List<SimpleDomain> list = new ArrayList<>();
-    SyncMemProtocol<List<SimpleDomain>> syncMemProtocol = new SyncMemProtocol<>("asdfasda","methodId",list,new TypeReference<List<SimpleDomain>>(){});
-    String jsonStr = JSONObject.toJSONString(syncMemProtocol);
-    SyncMemProtocol protocol = JSONObject.parseObject(jsonStr,SyncMemProtocol.class);
-    return protocol.getTypeReference().toString();
-  }
-}
->>>>>>> 37df1e31c722c1c58b942f3a73d02c49d634e664
