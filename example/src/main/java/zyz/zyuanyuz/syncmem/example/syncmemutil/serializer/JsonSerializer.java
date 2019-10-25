@@ -1,14 +1,13 @@
 package zyz.zyuanyuz.syncmem.example.syncmemutil.serializer;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemProtocol;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +24,7 @@ public class JsonSerializer implements SyncMemSerializer {
 
   // TODO deserialize the collection like Map<?,List<?>>or Map<?,Map<?,?>>
   @Override
+<<<<<<< HEAD
   public SyncMemProtocol deserializeObject(String msg) throws Exception {
     //    SyncMemProtocol protocol = JSONObject.parseObject(msg, SyncMemProtocol.class);
     JSONObject msgJson = JSON.parseObject(msg);
@@ -47,4 +47,23 @@ public class JsonSerializer implements SyncMemSerializer {
 //    }
     return null;
   }
+=======
+  public SyncMemProtocol deserializeObject(String json) throws Exception {
+    SyncMemProtocol protocol = JSONObject.parseObject(json, SyncMemProtocol.class);
+    logger.info("typeNames are {}", protocol.getTypeNames());
+    JSONObject jsonObject = JSON.parseObject(json);
+    protocol.setData(
+        deserialzeData(0, protocol.getTypeNames(), jsonObject.getString(SyncMemProtocol.DATA_STR)));
+    return protocol;
+  }
+
+  private Object deserialzeData(int index, List<String> types, String data) throws Exception {
+    if (Class.forName(types.get(index)).isInstance(Collection.class)) {
+
+    } else if (Class.forName(types.get(index)).isInstance(Map.class)) {
+
+    }
+    return JSONObject.parseObject(data, Class.forName(types.get(index)));
+  }
+>>>>>>> 37df1e31c722c1c58b942f3a73d02c49d634e664
 }

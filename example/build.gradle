@@ -17,6 +17,7 @@ dependencies {
     implementation 'io.lettuce:lettuce-core:5.0.5.RELEASE'
     implementation 'com.alibaba:fastjson:1.2.62'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    //implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -1,5 +1,6 @@
 package zyz.zyuanyuz.syncmem.example.syncmemutil;
 
+import com.alibaba.fastjson.TypeReference;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.slf4j.Logger;
@@ -64,12 +65,10 @@ public class SyncMemUtil {
     methodMap.put(methodId, method);
   }
 
-  /**
-   * use to publish data to channel
-   *
-   * @param methodName
-   * @param data
-   */
+  public void syncMemPublish(String methodName, Object data, TypeReference<?> typeReference){
+
+  }
+
   public void syncMemPublish(String methodName, Object data, Class<?>... clazzs) {
     SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazzs);
     String objStr = null;
