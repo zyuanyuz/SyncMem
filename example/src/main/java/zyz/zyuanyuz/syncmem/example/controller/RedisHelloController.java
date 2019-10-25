@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import zyz.zyuanyuz.syncmem.example.service.RedisHelloService;
 
-import java.util.List;
-
 /**
  * @author George Yu
  * @since 2019/10/16 17:45
@@ -14,7 +12,6 @@ import java.util.List;
 @RestController
 public class RedisHelloController {
   @Autowired RedisHelloService redisHelloService;
-
 
   @GetMapping("/get")
   public String getString() {

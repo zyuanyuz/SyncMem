@@ -4,6 +4,7 @@ import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zyz.zyuanyuz.syncmem.example.syncmemutil.serializer.JDKSerializer;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.serializer.JsonSerializer;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.serializer.SyncMemSerializer;
 
@@ -43,7 +44,12 @@ public class SyncMemUtil {
     this.subConnection.addListener(
         new SyncMemRedisPubSubImpl(this.channel, this::handleSyncMem)); // use this for callback
     this.subConnection.sync().subscribe(channel);
-    this.serializer = new JsonSerializer();
+    this.serializer = new JDKSerializer();
+  }
+
+  public SyncMemUtil(RedisClient redisClient,String channel,SyncMemSerializer serializer){
+      this(redisClient,channel);
+      this.serializer = serializer;
   }
 
   public void setSerializer(SyncMemSerializer serializer) {
@@ -51,6 +57,10 @@ public class SyncMemUtil {
   }
 
   public void register(String methodId, Consumer<Object> method) {
+    if (methodMap.get(methodId) != null) {
+      logger.error("method :{} have't be registered!", methodId);
+      return;
+    }
     methodMap.put(methodId, method);
   }
 
@@ -62,22 +72,27 @@ public class SyncMemUtil {
    */
   public void syncMemPublish(String methodName, Object data, Class<?>... clazzs) {
     SyncMemProtocol protocol = new SyncMemProtocol(this.uuid, methodName, data, clazzs);
-    String jsonStr = serializer.serializeObject(protocol);
-    logger.info("publish to channel:{} data:{}", this.channel, jsonStr);
-    pubConnection.sync().publish(this.channel, jsonStr);
+    String objStr = null;
+    try {
+      objStr = serializer.serializeObject(protocol);
+    } catch (Exception e) {
+      logger.error("serialization failed with exception :{}", e.getMessage());
+    }
+    //logger.info("publish to channel:{} data:{}", this.channel, objStr);
+    pubConnection.sync().publish(this.channel, objStr);
   }
 
   private void handleSyncMem(String message) {
-    logger.info("start handle sync message:{}", message);
+    //logger.info("start handle sync message:{}", message);
     try {
       SyncMemProtocol protocol = serializer.deserializeObject(message);
+      logger.info("protocol got is :{}", protocol);
       if (protocol
           .getSyncMemId()
           .equals(this.uuid)) { // receive the message this SyncMemUtil published
         return;
       }
       // method invoke need test
-      logger.info("method ready to invoke is :{}", protocol.getMethodId());
       // callback method consumer
       methodMap.get(protocol.getMethodId()).accept(protocol.getData());
     } catch (Exception e) {

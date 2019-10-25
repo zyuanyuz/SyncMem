@@ -25,6 +25,7 @@ public class SyncMemRedisPubSubImpl implements RedisPubSubListener<String, Strin
   @Override
   public void message(String channel, String message) {
     if (this.subChannel.equals(channel)) {
+      logger.info("message received is :{}", message);
       consumer.accept(message);
     }
   }

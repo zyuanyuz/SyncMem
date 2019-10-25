@@ -19,7 +19,7 @@ public class JsonSerializer implements SyncMemSerializer {
   private static final Logger logger = LoggerFactory.getLogger(JsonSerializer.class);
 
   @Override
-  public String serializeObject(SyncMemProtocol protocol) {
+  public String serializeObject(SyncMemProtocol protocol) throws Exception {
     return JSONObject.toJSONString(protocol);
   }
 
@@ -33,25 +33,18 @@ public class JsonSerializer implements SyncMemSerializer {
     JSONArray typeNamesJson = msgJson.getJSONArray(SyncMemProtocol.TYPENAMES);
     JSONObject dataJson = msgJson.getJSONObject(SyncMemProtocol.DATA_STR);
 
-    
-    if (clazz.isInstance(Collection.class)) {
-      protocol.setData(
-          JSONObject.parseObject(
-              jsonData.toJSONString(),
-              Class.forName(protocol.getTypeNames().get(1)),
-              Feature.OrderedField));
-    } else if (clazz.isInstance(Map.class)) {
-
-    } else {
-
-    }
+//
+//    if (clazz.isInstance(Collection.class)) {
+//      protocol.setData(
+//          JSONObject.parseObject(
+//              jsonData.toJSONString(),
+//              Class.forName(protocol.getTypeNames().get(1)),
+//              Feature.OrderedField));
+//    } else if (clazz.isInstance(Map.class)) {
+//
+//    } else {
+//
+//    }
     return null;
   }
-
-  public Object deserializeData(String type, JSONObject object) throws Exception {
-    return JSONObject.parseObject(object.toJSONString(), Class.forName(type));
-  }
-
-  public Collection<Object> deserializeCollection(String type, JSONObject object)
-      throws Exception {}
 }

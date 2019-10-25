@@ -7,7 +7,7 @@ import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemProtocol;
  * @since 2019/10/21 17:04
  */
 public interface SyncMemSerializer {
-  String serializeObject(SyncMemProtocol protocol);
+  String serializeObject(SyncMemProtocol protocol) throws Exception;
 
   SyncMemProtocol deserializeObject(String msg) throws Exception;
 }

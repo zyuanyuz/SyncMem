@@ -20,8 +20,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @Service
 public class RedisHelloService implements InitializingBean {
-  @Value("${spring.application.name}")
-  private String appName;
+    @Value("${syncmem.name}")
+    private String syncMemName;
 
   List<ComplexDomain> list = new ArrayList<>();
 
