@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  * @author George Yu
  * @since 2019/10/25 10:10
  */
-public class JDKSerializer implements SyncMemSerializer {
+public class JDKSerializer extends SyncMemSerializer {
   private static final Logger logger = LoggerFactory.getLogger(JDKSerializer.class);
 
   @Override

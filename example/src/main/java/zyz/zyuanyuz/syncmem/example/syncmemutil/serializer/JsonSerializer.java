@@ -15,7 +15,7 @@ import java.util.Map;
  * @author George Yu
  * @since 2019/10/21 17:05
  */
-public class JsonSerializer implements SyncMemSerializer {
+public class JsonSerializer extends SyncMemSerializer {
   private static final Logger logger = LoggerFactory.getLogger(JsonSerializer.class);
 
   @Override
@@ -33,18 +33,6 @@ public class JsonSerializer implements SyncMemSerializer {
     JSONArray typeNamesJson = msgJson.getJSONArray(SyncMemProtocol.TYPENAMES);
     JSONObject dataJson = msgJson.getJSONObject(SyncMemProtocol.DATA_STR);
 
-//
-//    if (clazz.isInstance(Collection.class)) {
-//      protocol.setData(
-//          JSONObject.parseObject(
-//              jsonData.toJSONString(),
-//              Class.forName(protocol.getTypeNames().get(1)),
-//              Feature.OrderedField));
-//    } else if (clazz.isInstance(Map.class)) {
-//
-//    } else {
-//
-//    }
     return null;
   }
 }

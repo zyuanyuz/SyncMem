@@ -65,6 +65,10 @@ public class SyncMemUtil {
     methodMap.put(methodId, method);
   }
 
+  public void register(String methodId,Consumer<?> consumer,TypeReference<?> typeReference){
+
+  }
+
   public void syncMemPublish(String methodName, Object data, TypeReference<?> typeReference){
 
   }
