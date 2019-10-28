@@ -3,13 +3,17 @@ package zyz.zyuanyuz.syncmem.example.syncmemutil.serializer;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemConsumerEntity;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemProtocol;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import static com.alibaba.fastjson.JSON.parseObject;
 
 /**
  * @author George Yu
@@ -23,16 +27,15 @@ public class JsonSerializer extends SyncMemSerializer {
     return JSONObject.toJSONString(protocol);
   }
 
-  // TODO deserialize the collection like Map<?,List<?>>or Map<?,Map<?,?>>
   @Override
   public SyncMemProtocol deserializeObject(String msg) throws Exception {
-    //    SyncMemProtocol protocol = JSONObject.parseObject(msg, SyncMemProtocol.class);
-    JSONObject msgJson = JSON.parseObject(msg);
-    JSONObject syncMemUtiIdJson = msgJson.getJSONObject(SyncMemProtocol.SYNCMEMID_STR);
-    JSONObject methodIdJson = msgJson.getJSONObject(SyncMemProtocol.METHODID_STR);
-    JSONArray typeNamesJson = msgJson.getJSONArray(SyncMemProtocol.TYPENAMES);
-    JSONObject dataJson = msgJson.getJSONObject(SyncMemProtocol.DATA_STR);
-
-    return null;
+    JSONObject protocolObject = JSON.parseObject(msg);
+    String syncMemId = protocolObject.getString(SyncMemProtocol.SYNCMEMID_STR);
+    String methodId = protocolObject.getString(SyncMemProtocol.METHODID_STR);
+    SyncMemConsumerEntity consumerEntity = this.context.getConsumerEntity(methodId);
+    Object dataObj =
+        JSON.parseObject(msg)
+            .getObject(SyncMemProtocol.DATA_STR, consumerEntity.getTypeReference());
+    return new SyncMemProtocol<>(syncMemId, methodId, dataObj);
   }
 }

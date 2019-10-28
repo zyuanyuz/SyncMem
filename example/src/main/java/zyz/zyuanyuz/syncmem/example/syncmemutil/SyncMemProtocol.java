@@ -20,37 +20,14 @@ public class SyncMemProtocol<T> implements Serializable {
 
   private String syncMemId;
   private String methodId;
-  private List<String> typeNames; // can't set as Class type because fastJson can't serialize it
-  private String typeName;
   private T data;
 
   public SyncMemProtocol() {}
 
-  public SyncMemProtocol(String syncMemId, String methodId, T data, String typeName) {
+  public SyncMemProtocol(String syncMemId, String methodId, T data) {
     this.syncMemId = syncMemId;
     this.methodId = methodId;
     this.data = data;
-    this.typeName = typeName;
-  }
-
-  public SyncMemProtocol(String syncMemId, String methodId, T data, Class<?>... clazzs) {
-    this();
-    String[] types = new String[clazzs.length];
-    for (int i = 0; i < clazzs.length; i++) {
-      types[i] = clazzs[i].toString();
-    }
-    this.setSyncMemId(syncMemId);
-    this.setMethodId(methodId);
-    this.setData(data);
-    this.setTypeNames(Arrays.asList(types));
-  }
-
-  public SyncMemProtocol(String syncMemId, String methodId, T data, String... types) {
-    this.syncMemId = syncMemId;
-    this.methodId = methodId;
-    this.data = data;
-    this.typeNames = new ArrayList<>();
-    typeNames.addAll(Arrays.asList(types));
   }
 
   public String getSyncMemId() {
@@ -77,22 +54,12 @@ public class SyncMemProtocol<T> implements Serializable {
     this.data = data;
   }
 
-  public List<String> getTypeNames() {
-    return typeNames;
-  }
-
-  public void setTypeNames(List<String> typeNames) {
-    this.typeNames = typeNames;
-  }
-
   @Override
   public String toString() {
     return "SyncMemId:["
         + syncMemId
         + "],MethodId:["
         + methodId
-        + "],data types:["
-        + typeNames
         + "],data:["
         + data.toString()
         + "]";

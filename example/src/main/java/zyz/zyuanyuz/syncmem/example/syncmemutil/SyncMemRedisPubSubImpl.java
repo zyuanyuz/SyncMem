@@ -37,12 +37,7 @@ public class SyncMemRedisPubSubImpl implements RedisPubSubListener<String, Strin
 
   @Override
   public void subscribed(String channel, long count) {
-    if (this.subChannel.equals(channel)) {
-      logger.info(
-          "this service build a new instance with channel:{} get subscribed count:{}",
-          channel,
-          count);
-    }
+    //do nothing
   }
 
   @Override

@@ -7,27 +7,32 @@ import java.util.List;
  * @since 2019/10/21 16:03
  */
 public class ComplexDomain {
-    String name;
-    Object obj;
+  String name;
+  Object obj;
 
-    public ComplexDomain(String name, Object obj) {
-        this.name = name;
-        this.obj = obj;
-    }
+  public ComplexDomain(String name, Object obj) {
+    this.name = name;
+    this.obj = obj;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Object getObj() {
-        return obj;
-    }
+  public Object getObj() {
+    return obj;
+  }
 
-    public void setObj(Object obj) {
-        this.obj = obj;
-    }
+  public void setObj(Object obj) {
+    this.obj = obj;
+  }
+
+  @Override
+  public String toString() {
+    return "name:[" + name + "],obj:[" + obj + "]";
+  }
 }

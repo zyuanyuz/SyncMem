@@ -9,11 +9,11 @@ import java.util.function.Consumer;
  * @since 2019/10/27 13:28
  */
 
-public class SyncMemConsumerEntry<T> {
-    Consumer<T> consumer;
-    TypeReference<T> typeReference; // for args cast
+public class SyncMemConsumerEntity<T> {
+    private Consumer<T> consumer;
+    private TypeReference<T> typeReference; // for args cast
 
-    public SyncMemConsumerEntry(Consumer<T> consumer, TypeReference<T> typeReference) {
+    public SyncMemConsumerEntity(Consumer<T> consumer, TypeReference<T> typeReference) {
         this.consumer = consumer;
         this.typeReference = typeReference;
     }

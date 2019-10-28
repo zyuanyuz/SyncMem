@@ -1,5 +1,6 @@
 package zyz.zyuanyuz.syncmem.example.service;
 
+import com.alibaba.fastjson.TypeReference;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +21,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @Service
 public class RedisHelloService implements InitializingBean {
-    @Value("${syncmem.name}")
-    private String syncMemName;
 
   List<ComplexDomain> list = new ArrayList<>();
 
@@ -31,8 +30,14 @@ public class RedisHelloService implements InitializingBean {
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    syncMemUtil.register("redisHelloService.syncDelete", o -> syncDel((List<ComplexDomain>) o));
-    syncMemUtil.register("redisHelloService.syncAdd", o -> syncAdd((List<ComplexDomain>) o));
+    syncMemUtil.register(
+        "redisHelloService.syncDelete",
+        o -> syncDel((List<ComplexDomain>) o),
+        new TypeReference<List<ComplexDomain>>() {});
+    syncMemUtil.register(
+        "redisHelloService.syncAdd",
+        o -> syncAdd((List<ComplexDomain>) o),
+        new TypeReference<List<ComplexDomain>>() {});
   }
 
   public List<ComplexDomain> getList() {
@@ -49,8 +54,7 @@ public class RedisHelloService implements InitializingBean {
     addList.add(new ComplexDomain("a", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
     addList.add(new ComplexDomain("b", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
     addList.add(new ComplexDomain("c", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
-    syncMemUtil.syncMemPublish(
-        "redisHelloService.syncAdd", addList, addList.getClass(), ComplexDomain.class);
+    syncMemUtil.syncMemPublish("redisHelloService.syncAdd", addList);
     this.list.addAll(addList);
   }
 
