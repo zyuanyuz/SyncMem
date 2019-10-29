@@ -6,11 +6,11 @@ import java.util.List;
  * @author George Yu
  * @since 2019/10/21 16:03
  */
-public class ComplexDomain {
+public class ComplexDomain<T> {
   String name;
-  Object obj;
+  T obj;
 
-  public ComplexDomain(String name, Object obj) {
+  public ComplexDomain(String name, T obj) {
     this.name = name;
     this.obj = obj;
   }
@@ -23,11 +23,11 @@ public class ComplexDomain {
     this.name = name;
   }
 
-  public Object getObj() {
+  public T getObj() {
     return obj;
   }
 
-  public void setObj(Object obj) {
+  public void setObj(T obj) {
     this.obj = obj;
   }
 

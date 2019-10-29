@@ -33,11 +33,11 @@ public class RedisHelloService implements InitializingBean {
     syncMemUtil.register(
         "redisHelloService.syncDelete",
         o -> syncDel((List<ComplexDomain>) o),
-        new TypeReference<List<ComplexDomain>>() {});
+        new TypeReference<List<ComplexDomain<List<String>>>>() {});
     syncMemUtil.register(
         "redisHelloService.syncAdd",
         o -> syncAdd((List<ComplexDomain>) o),
-        new TypeReference<List<ComplexDomain>>() {});
+        new TypeReference<List<ComplexDomain<List<String>>>>() {});
   }
 
   public List<ComplexDomain> getList() {
@@ -51,9 +51,9 @@ public class RedisHelloService implements InitializingBean {
     List<SimpleDomain> simpleList =
         Arrays.asList(
             new SimpleDomain("ten", 10), new SimpleDomain("two", 2), new SimpleDomain("one", 1));
-    addList.add(new ComplexDomain("a", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
-    addList.add(new ComplexDomain("b", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
-    addList.add(new ComplexDomain("c", new ArrayList<>().addAll(Arrays.asList("a", "aa", "aaa"))));
+    addList.add(new ComplexDomain<>("a", Arrays.asList("a", "aa", "aaa")));
+    addList.add(new ComplexDomain<>("b", Arrays.asList("a", "aa", "aaa")));
+    addList.add(new ComplexDomain<>("c", Arrays.asList("a", "aa", "aaa")));
     syncMemUtil.syncMemPublish("redisHelloService.syncAdd", addList);
     this.list.addAll(addList);
   }

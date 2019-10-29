@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemConsumerEntity;
@@ -24,7 +26,8 @@ public class JsonSerializer extends SyncMemSerializer {
 
   @Override
   public String serializeObject(SyncMemProtocol protocol) throws Exception {
-    return JSONObject.toJSONString(protocol);
+    logger.info("protocol to serialize:{}", protocol);
+    return JSONObject.toJSONString(protocol, SerializerFeature.SortField);
   }
 
   @Override
@@ -33,9 +36,9 @@ public class JsonSerializer extends SyncMemSerializer {
     String syncMemId = protocolObject.getString(SyncMemProtocol.SYNCMEMID_STR);
     String methodId = protocolObject.getString(SyncMemProtocol.METHODID_STR);
     SyncMemConsumerEntity consumerEntity = this.context.getConsumerEntity(methodId);
+    // consumerEntity.getTypeReference().getType();
     Object dataObj =
-        JSON.parseObject(msg)
-            .getObject(SyncMemProtocol.DATA_STR, consumerEntity.getTypeReference());
+        protocolObject.getObject(SyncMemProtocol.DATA_STR, consumerEntity.getTypeReference());
     return new SyncMemProtocol<>(syncMemId, methodId, dataObj);
   }
 }
