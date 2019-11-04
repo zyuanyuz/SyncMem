@@ -1,16 +1,15 @@
-package yzy.zyuanyuz.syncmemutil;
+package us.zoom.util.syncmemutil;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 
 /**
- * @author yu
- * @since 2019/11/3 18:35
+ * @author zyuanyuz
+ * @since 2019/11/4 21:28
  */
 public abstract class SyncMemJSONSerializer {
-
-  public static String getMessage(SyncMemProtocol protocol) {
+  public static String getJsonMessage(SyncMemProtocol protocol) {
     return JSONObject.toJSONString(protocol);
   }
 
@@ -19,10 +18,10 @@ public abstract class SyncMemJSONSerializer {
   }
 
   public static String getConsumerId(String message) {
-    return JSON.parseObject(message).getString(SyncMemProtocol.METHODID_STR);
+    return JSON.parseObject(message).getString(SyncMemProtocol.CONSUMERID_STR);
   }
 
-  public static Object getData(String message, TypeReference dataType) {
+  public static Object getData(String message, TypeReference<?> dataType) {
     return JSON.parseObject(message).getObject(SyncMemProtocol.DATA_STR, dataType);
   }
 }
