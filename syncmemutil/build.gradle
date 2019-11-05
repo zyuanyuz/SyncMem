@@ -16,6 +16,8 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '2.1.9.RELEASE'
     // https://mvnrepository.com/artifact/redis.clients/jedis
     compile group: 'redis.clients', name: 'jedis', version: '3.1.0'
+    // https://mvnrepository.com/artifact/io.lettuce/lettuce-core
+    compile group: 'io.lettuce', name: 'lettuce-core', version: '5.2.0.RELEASE'
     implementation 'com.alibaba:fastjson:1.2.62'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
