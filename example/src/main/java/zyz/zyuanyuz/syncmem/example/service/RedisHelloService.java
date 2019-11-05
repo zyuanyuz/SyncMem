@@ -1,13 +1,12 @@
 package zyz.zyuanyuz.syncmem.example.service;
 
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import us.zoom.util.syncmemutil.SyncMemUtil;
 import zyz.zyuanyuz.syncmem.example.domain.ComplexDomain;
 import zyz.zyuanyuz.syncmem.example.domain.SimpleDomain;
-import zyz.zyuanyuz.syncmem.example.syncmemutil.SyncMemUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,11 +25,12 @@ public class RedisHelloService implements InitializingBean {
 
   Lock lock = new ReentrantLock();
 
-  @Autowired SyncMemUtil syncMemUtil;
+  @Autowired
+  SyncMemUtil syncMemUtil;
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    syncMemUtil.register(
+    syncMemUtil.registerConsumer(
         "redisHelloService.syncDelete",
         o -> syncDel((List<ComplexDomain>) o),
         new TypeReference<List<ComplexDomain<List<String>>>>() {});
