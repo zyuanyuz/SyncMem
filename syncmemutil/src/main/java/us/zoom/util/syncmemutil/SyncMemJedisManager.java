@@ -15,41 +15,50 @@ import java.util.function.Consumer;
  * @author zyuanyuz
  * @since 2019/11/4 21:38
  */
+public class SyncMemJedisManager extends AbstractSyncMemManager {
+  private static final Logger logger = LoggerFactory.getLogger(SyncMemJedisManager.class);
 
-public class SyncMemJedisManager extends AbstractSyncMemManager{
-    private static final Logger logger = LoggerFactory.getLogger(SyncMemJedisManager.class);
+  private Jedis pubJedis;
 
-
-    private Jedis pubJedis;
-
-    public SyncMemJedisManager(JedisPool jedisPool, String channel) {
-        this.channel = channel;
-        this.pubJedis = jedisPool.getResource();
-        Jedis subJedis = jedisPool.getResource();
-        new Thread(() -> {
-            while (true) {
+  public SyncMemJedisManager(JedisPool jedisPool, String channel) {
+    this.channel = channel;
+    this.pubJedis = jedisPool.getResource();
+    Jedis subJedis = jedisPool.getResource();
+    new Thread(
+            () -> {
+              while (true) {
                 try {
-                    subJedis.subscribe(new SyncMemPubSubImpl(this.syncMemId, this.channel, this::handleMessage), channel);
+                  subJedis.subscribe(
+                      new SyncMemPubSubImpl(this.syncMemId, this.channel, this::handleMessage),
+                      channel);
                 } catch (Exception e) {
-                    logger.error("sync mem : jedis subscribe with exception :{}", e.getMessage());
+                  logger.error("sync mem : jedis subscribe with exception :{}", e.getMessage());
                 }
-            }
-        }).start();
-    }
+              }
+            })
+        .start();
+  }
 
-    @Override
-    public void publish(String consumerId, Object data) {
-        if (this.consumerMap.containsKey(consumerId)) {
-            pubJedis.publish(this.channel, SyncMemJSONSerializer.getJsonMessage(new SyncMemProtocol(this.syncMemId, this.channel, data)));
-        }
-        logger.warn("sync mem : no consumerId {} exist", consumerId);
+  @Override
+  public void publish(String consumerId, Object data) {
+    if (this.consumerMap.containsKey(consumerId)) {
+      logger.info(
+          "sync mem : other {} instance consumer {} will be invoked", this.channel, consumerId);
+      pubJedis.publish(
+          this.channel,
+          SyncMemJSONSerializer.getJsonMessage(
+              new SyncMemProtocol(this.syncMemId, consumerId, data)));
+    } else {
+      logger.warn("sync mem : no consumerId {} exist", consumerId);
     }
+  }
 
-    @Override
-    void handleMessage(String message) {
-        String consumerId = SyncMemJSONSerializer.getConsumerId(message);
-        SyncMemEntry entry = this.consumerMap.get(consumerId);
-        Object data = SyncMemJSONSerializer.getData(message, entry.getDataType());
-        entry.getConsumer().accept(data);
-    }
+  @Override
+  void handleMessage(String message) {
+    String consumerId = SyncMemJSONSerializer.getConsumerId(message);
+    SyncMemEntry entry = this.consumerMap.get(consumerId);
+    Object data = SyncMemJSONSerializer.getData(message, entry.getDataType());
+    logger.info("sync mem : consumer {} was invoked.", consumerId);
+    entry.getConsumer().accept(data);
+  }
 }

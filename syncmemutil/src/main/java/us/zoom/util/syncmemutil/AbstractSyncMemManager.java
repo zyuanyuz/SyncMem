@@ -24,6 +24,7 @@ public abstract class AbstractSyncMemManager {
             logger.warn("sync mem : can't register the consumerId {} already exist", consumerId);
             return;
         }
+        logger.info("syn mem : consumer registry with consumerId {}",consumerId);
         this.consumerMap.put(consumerId, new SyncMemEntry(consumer, dataType));
     }
 

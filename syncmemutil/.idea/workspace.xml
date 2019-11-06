@@ -2,22 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c98fd698-5412-4217-ab2f-9366f8a35d4f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/AbstractSyncMemManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemAutoConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemEntry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemJedisManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/config/SyncMemConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/controller/HelloController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/service/HelloService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/bin/main/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/bin/main/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/java/zyz/zyuanyuz/syncmem/example/ExampleApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/java/zyz/zyuanyuz/syncmem/example/config/RedisClientConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/java/zyz/zyuanyuz/syncmem/example/controller/RedisHelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/java/zyz/zyuanyuz/syncmem/example/controller/SyncMemMapController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/java/zyz/zyuanyuz/syncmem/example/domain/ComplexDomain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/java/zyz/zyuanyuz/syncmem/example/domain/SimpleDomain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/java/zyz/zyuanyuz/syncmem/example/service/RedisHelloService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../example/src/test/java/zyz/zyuanyuz/syncmem/example/ExampleApplicationTests.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemPubSubImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemPubSubImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/AbstractSyncMemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/AbstractSyncMemManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemAutoConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemAutoConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemJedisManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/us/zoom/util/syncmemutil/SyncMemJedisManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +110,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="D:/Projects/websrv-tools/websrv-tools-op" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../example" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -149,6 +167,7 @@
       <workItem from="1572870444800" duration="1487000" />
       <workItem from="1572872811468" duration="1747000" />
       <workItem from="1572914403817" duration="6197000" />
+      <workItem from="1573008718269" duration="4658000" />
     </task>
     <servers />
   </component>
@@ -166,26 +185,26 @@
     </state>
     <state x="402" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1572874474254" />
     <state x="503" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1572918565209" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1572920453959">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1573009372458">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1572920453958" />
-    <state width="1879" height="282" key="GridCell.Tab.0.bottom" timestamp="1572922311627">
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1573009372458" />
+    <state width="1879" height="217" key="GridCell.Tab.0.bottom" timestamp="1573026429696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1879" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1572922311627" />
-    <state width="1879" height="282" key="GridCell.Tab.0.center" timestamp="1572922311627">
+    <state width="1879" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1573026429696" />
+    <state width="1879" height="217" key="GridCell.Tab.0.center" timestamp="1573026429696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1879" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1572922311627" />
-    <state width="1879" height="282" key="GridCell.Tab.0.left" timestamp="1572922311627">
+    <state width="1879" height="217" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1573026429696" />
+    <state width="1879" height="217" key="GridCell.Tab.0.left" timestamp="1573026429696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1879" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1572922311627" />
-    <state width="1879" height="282" key="GridCell.Tab.0.right" timestamp="1572922311627">
+    <state width="1879" height="217" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1573026429696" />
+    <state width="1879" height="217" key="GridCell.Tab.0.right" timestamp="1573026429696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1879" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1572922311627" />
+    <state width="1879" height="217" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1573026429696" />
     <state x="540" y="263" key="IDE.errors.dialog" timestamp="1572922212898">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -195,6 +214,10 @@
     </state>
     <state x="300" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1572872932127" />
     <state x="375" y="69" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1572916987711" />
+    <state x="124" y="222" key="new project wizard" timestamp="1573009546593">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="124" y="222" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1573009546593" />
   </component>
   <component name="masterDetails">
     <states>
