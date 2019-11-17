@@ -1,15 +1,9 @@
 package us.zoom.util.syncmemutil;
 
-import com.alibaba.fastjson.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 
 /**
  * @author zyuanyuz
@@ -47,7 +41,7 @@ public class SyncMemJedisManager extends AbstractSyncMemManager {
       pubJedis.publish(
           this.channel,
           SyncMemJSONSerializer.getJsonMessage(
-              new SyncMemProtocol(this.syncMemId, consumerId, data)));
+              new SyncMemProtocol<>(this.syncMemId, consumerId, data)));
     } else {
       logger.warn("sync mem : no consumerId {} exist", consumerId);
     }

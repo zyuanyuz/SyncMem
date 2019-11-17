@@ -2,34 +2,40 @@ package us.zoom.util.syncmemutil;
 
 import com.alibaba.fastjson.TypeReference;
 
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 
 /**
- * @Author George
- * @Date 2019/11/5 9:47
+ * @author George
+ * @date 2019/11/5 9:47
  */
 public class SyncMemEntry {
-    private Consumer<Object> consumer;
-    private TypeReference<?> dataType;
+  private Consumer<Object> consumer;
+  private Type dataType;
 
-    public SyncMemEntry(Consumer<Object> consumer, TypeReference<?> dataType) {
-        this.consumer = consumer;
-        this.dataType = dataType;
-    }
+  public SyncMemEntry(Consumer<Object> consumer, TypeReference<?> dataType) {
+    this.consumer = consumer;
+    this.dataType = dataType.getType();
+  }
 
-    public Consumer<Object> getConsumer() {
-        return consumer;
-    }
+  public SyncMemEntry(Consumer<Object> consumer, Type dataType) {
+    this.consumer = consumer;
+    this.dataType = dataType;
+  }
 
-    public void setConsumer(Consumer<Object> consumer) {
-        this.consumer = consumer;
-    }
+  public Consumer<Object> getConsumer() {
+    return consumer;
+  }
 
-    public TypeReference<?> getDataType() {
-        return dataType;
-    }
+  public void setConsumer(Consumer<Object> consumer) {
+    this.consumer = consumer;
+  }
 
-    public void setDataType(TypeReference<?> dataType) {
-        this.dataType = dataType;
-    }
+  public Type getDataType() {
+    return dataType;
+  }
+
+  public void setDataType(Type dataType) {
+    this.dataType = dataType;
+  }
 }

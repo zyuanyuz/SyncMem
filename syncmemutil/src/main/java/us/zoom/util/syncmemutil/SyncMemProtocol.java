@@ -4,18 +4,18 @@ package us.zoom.util.syncmemutil;
  * @author zyuanyuz
  * @since 2019/11/4 21:30
  */
-public class SyncMemProtocol {
+public class SyncMemProtocol<T> {
   public static final String SYNCMEMID_STR = "syncMemId";
   public static final String CONSUMERID_STR = "consumerId";
   public static final String DATA_STR = "data";
 
   private String syncMemId;
   private String consumerId;
-  private Object data;
+  private T data;
 
   public SyncMemProtocol() {}
 
-  public SyncMemProtocol(String syncMemId, String consumerId, Object data) {
+  public SyncMemProtocol(String syncMemId, String consumerId, T data) {
     this.syncMemId = syncMemId;
     this.consumerId = consumerId;
     this.data = data;
@@ -37,11 +37,11 @@ public class SyncMemProtocol {
     this.consumerId = consumerId;
   }
 
-  public Object getData() {
+  public T getData() {
     return data;
   }
 
-  public void setData(Object data) {
+  public void setData(T data) {
     this.data = data;
   }
 
